@@ -11,6 +11,8 @@
 |
 */
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('empleados/eliminar/{id}', 'EmpleadoController@eliminar')->name('eliminar');
+Route::put('empleados/actualizar', 'EmpleadoController@ChangePass')->name('update');
 Route::resource('empleaods', 'EmpleadoController');
 Route::get('/', function () {
     return view('welcome');

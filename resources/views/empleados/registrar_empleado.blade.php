@@ -49,13 +49,13 @@
                               <div class="col-sm-6">
                                 <div class="form-group">
                                   <label for="salariobruto">Salario mensual bruto</label>
-                                  <input type="number" class="form-control rounded-pill" id="salariobruto" name="salariobruto" placeholder="Ingresar salario">
+                                  <input type="number" class="form-control rounded-pill" id="salariobruto" name="salariobruto" placeholder="Ingresar salario" min="0">
                                 </div>
                               </div>
                               <div class="col-sm-6">
                                 <div class="form-group">
                                   <label for="salarioneto">Salario mensual neto</label>
-                                  <input type="number" class="form-control rounded-pill" id="salarioneto" name="salarioneto" placeholder="Ingresar salario">
+                                  <input type="number" class="form-control rounded-pill" id="salarioneto" name="salarioneto" placeholder="Ingresar salario" min="0">
                                 </div>
                               </div>
                               <div class="col-sm-6">
@@ -111,11 +111,36 @@
                           <!-- /.card-body -->
           
                           <div class="card-footer">
-                            <button type="submit" class="btn btn-success btn-block rounded-pill">Registrar</button>
+                            <button type="button" class="btn btn-success btn-block rounded-pill" data-toggle="modal" data-target="#exampleModalCenter">
+                             Registrar
+                            </button>
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Guardar Cambios</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="form-group">
+                                      <label for="pass">Contraseña</label>
+                                      <input type="password" class="form-control rounded-pill" id="pass" name="pass"  placeholder="Ingresar contraseña" required>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </form>
                       </div>
                 </div>
         </div>
     </div>
+@include('sweetalert::alert')
 @stop

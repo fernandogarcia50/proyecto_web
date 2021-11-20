@@ -27,7 +27,8 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        //
+        $empleados= Empleado::paginate(7);
+       return view('empleados.mostrar_empleado', compact('empleados'));
     }
 
     /**
@@ -38,14 +39,21 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
+        $contrasena=auth()->user()->password;
+        if (Hash::check($request->pass, $contrasena)) {
+               
+        if (filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
+               
+            
+        
         $validation= Validator::make($request->all(), 
         [
             'foto' => ['required', 'image', 'mimes:jpeg,bmp,png,jpg', 'max:1024'],
             'nombre' => ['required', 'string', 'max:255'],
-            'curp' => ['required','min:18', 'max:18'],
-            'email' => ['required', 'string', 'email', 'max:255', ],
+            'curp' => ['required','min:18','unique:empleados' ,'max:18', 'regex: /^[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM]{1}(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[B-DF-HJ-NP-TV-Z]{3}[0-9A-Z]{1}[0-9]{1}$/'],
+            'email' => ['required', 'string', 'email', 'max:255','unique:users'],
             'password' => ['required', 'string', 'min:8'],
-            'rfc' => ['required', 'min:13', 'max:13'],
+            'rfc' => ['required', 'min:13','unique:empleados'  ,'max:13', 'regex: /^([A-ZÑ]|\&){4}[0-9]{2}(0[1-9]|1[0-2])([12][0-9]|0[1-9]|3[01])[A-Z0-9]{3}$/'],
             'salariobruto' => ['required'],
             'salarioneto' => ['required'],
             'fechaEntrada' => ['required'],
@@ -59,21 +67,21 @@ class EmpleadoController extends Controller
                         ->withErrors($validation)
                         ->withInput();
         }
-      echo "estoy llegando";
+     
       if ($request->salariobruto > $request->salarioneto){
             $hora1 = strtotime( $request->horaEntrada ); 
             $hora2 = strtotime( $request->horaSalida );
         if($hora1<$hora2)
         {
             $user=new User();
-            $user->email="fg7893210@gmail.com";
+            $user->email=$request->email;
             $user->password=Hash::make($request->password);
             $user->name=$request->nombre;
             $user->save();
             $idUsuario= $user->id;
             $empleado= new Empleado();
             $imagen=$request->foto;
-            $nombre= $request->nombre.'.'.$imagen->getClientOriginalExtension();
+            $nombre= $request->curp.'.'.$imagen->getClientOriginalExtension();
             $destina=public_path('img/empleados');
             $request->foto->move($destina, $nombre);
 
@@ -88,12 +96,23 @@ class EmpleadoController extends Controller
             $empleado->foto=$nombre;
             $empleado->user_id=$idUsuario;
             $empleado->save();
+
+            return redirect()->route('empleaods.create')->withSuccess('Empleado agregado');
+        }else{
+            return redirect()->route('empleaods.index')->withWarning('Datos incoherentes');
         }
           
       }else{
-          echo "no soy mayor";
+        return redirect()->route('empleaods.index')->withWarning('Datos incoherentes');
       }
-    
+
+    }else{
+        return redirect()->route('empleaods.index')->withWarning('Contraseña invalida');
+    }
+    }//aqui cierra el if principal
+    else {
+         return redirect()->route('empleaods.index')->withWarning('Contraseña invalida');
+    }
     }
 
     /**
@@ -115,7 +134,8 @@ class EmpleadoController extends Controller
      */
     public function edit($id)
     {
-        //
+       $empleado = Empleado::findOrFail($id);
+       return view('empleados.editar_empleados', compact('empleado'));
     }
 
     /**
@@ -127,7 +147,76 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $contrasena=auth()->user()->password;
+        if (Hash::check($request->pass, $contrasena)){
+
+            $empleado=Empleado::findOrFail($id);
+            $user=User::findOrFail($empleado->user_id);
+            if($user->email == $request->email)
+            {
+                if( $request->salariobruto != null){
+                    $empleado->salariobruto=$request->salariobruto;
+                }
+                if( $request->salarioneto != null){
+                    $empleado->salarioneto=$request->salarioneto;
+                }
+                if( $request->fechaEntrada != null){
+                    $empleado->fechaEntrada=$request->fechaEntrada;
+                }
+                if( $request->horaEntrada != null){
+                    $empleado->horaEntrada=$request->horaEntrada;
+                }
+                if( $request->horaSalida != null){
+                    $empleado->horaSalida=$request->horaSalida;
+                }
+                $empleado->save();
+                return redirect()->route('empleaods.create')->withSuccess('Informacion actualizada');
+            }else{
+                $validation= Validator::make($request->all(), 
+        [
+            'email' => ['required', 'string', 'email', 'max:255','unique:users'],
+        ]
+        );
+        if ($validation->fails()) {
+           // dd($validation);
+            return redirect()->route('empleaods.edit', $id)
+                        ->withErrors($validation)
+                        ->withInput();
+        }
+        if( $request->salariobruto != null){
+            $empleado->salariobruto=$request->salariobruto;
+        }
+        if( $request->salarioneto != null){
+            $empleado->salarioneto=$request->salarioneto;
+        }
+        if( $request->fechaEntrada != null){
+            $empleado->fechaEntrada=$request->fechaEntrada;
+        }
+        if( $request->horaEntrada != null){
+            $empleado->horaEntrada=$request->horaEntrada;
+        }
+        if( $request->horaSalida != null){
+            $empleado->horaSalida=$request->horaSalida;
+        }
+        $user->email=$request->email;
+        $empleado->save();
+        $user->save();
+
+
+        return redirect()->route('empleaods.create')->withSuccess('Informacion actualizada');
+               
+            }
+
+
+
+
+
+
+           
+            //return redirect()->route('empleaods.create')->withSuccess('Informacion actualizada');
+        }else{
+            return redirect()->route('empleaods.create')->withWarning('Contraseña invalida');
+        }
     }
 
     /**
@@ -138,6 +227,35 @@ class EmpleadoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $empleado=Empleado::find($id);
+        $empleado->delete();
+        $empleado->user->delete();
+        return redirect()->route('empleaods.create')->withSuccess('Empleado eliminado');
+    }
+    public function eliminar (Request $request){
+        $contrasena=auth()->user()->password;
+        if (Hash::check($request->pass, $contrasena)){
+            $empleado=Empleado::find($request->id);
+            $empleado->delete();
+            $empleado->user->delete();
+            return redirect()->route('empleaods.create')->withSuccess('Empleado eliminado');
+        }else{
+            return redirect()->route('empleaods.create')->withWarning('Contraseña invalida');
+        }
+        
+    }
+
+    public function ChangePass(Request $request){
+        $contrasena=auth()->user()->password;
+        if (Hash::check($request->pass, $contrasena)){
+            $empleado = Empleado::findOrFail($request->id);
+            $user=User::findOrFail($empleado->user_id);
+            $user->password=Hash::make($request->password);
+            $user->save();
+            return redirect()->route('empleaods.create')->withSuccess('Informacion actualizada');
+        }else{
+            return redirect()->route('empleaods.create')->withWarning('Contraseña invalida');
+        }
+
     }
 }
