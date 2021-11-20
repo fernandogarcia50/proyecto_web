@@ -232,61 +232,51 @@ return [
         ],
 
         // Sidebar items:
+   
      
         [
             'text' => 'blog',
             'url'  => '/resources/views/empleados/registrar_empleado.blade.php',
             'can'  => 'manage-blog',
         ],
-        [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'hola',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
+        ['header' => 'Administrador'],
         [
             'text'    => 'Empleados',
             'icon'    => 'fas fa-user-tie',
             'submenu' => [
                 [
-                    'text' => 'Registrar',
+                    'text' => 'Registrar empledo',
                     'route'  => 'registrarempleado',
+                    'icon'    => 'fas fa-plus',
                     
                 ],
                 [
-                    'text' => 'Mostrar',
+                    'text' => 'Mostrar empleados',
                     'route'  => 'empleaods.create',
+                    'icon'    => 'fas fa-eye',
                 ],
             ],
         ],
-        ['header' => 'labels'],
+        ['header' => 'Almacen'],
         [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
+            'text'    => 'Productos',
+            'icon'    => 'fas fa-box',
+            'submenu' => [
+                [
+                    'text' => 'Registrar producto',
+                    'route'  => 'registrarempleado',
+                    'icon'    => 'fas fa-plus',
+                    
+                ],
+                [
+                    'text' => 'Mostrar producto',
+                    'route'  => 'empleaods.create',
+                    'icon'    => 'fas fa-eye',
+                ],
+            ],
         ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
-        ],
+        
+       
     ],
 
     /*
