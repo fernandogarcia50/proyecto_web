@@ -264,17 +264,42 @@ return [
             'submenu' => [
                 [
                     'text' => 'Registrar producto',
-                    'route'  => 'registrarempleado',
+                    'route'  => 'productos.index',
                     'icon'    => 'fas fa-plus',
                     
                 ],
                 [
                     'text' => 'Mostrar producto',
-                    'route'  => 'empleaods.create',
+                    'route'  => 'productos.create',
                     'icon'    => 'fas fa-eye',
                 ],
             ],
         ],
+        ['header' => 'Recursos humanos'],
+        [
+            'text'    => 'Vacantes',
+            'icon'    => 'fas fa-box',
+            'submenu' => [
+                [
+                    'text' => 'Registrar vacantes',
+                    'route'  => 'productos.index',
+                    'icon'    => 'fas fa-plus',
+                    
+                ],
+                [
+                    'text' => 'Consultar vacantes',
+                    'route'  => 'productos.create',
+                    'icon'    => 'fas fa-eye',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Cambiar contraseña',
+            'route'  => 'productos.create',
+            'icon'    => 'fas fa-unlock-alt',
+            
+        ],
+        
         
        
     ],

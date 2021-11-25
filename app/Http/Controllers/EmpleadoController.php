@@ -107,7 +107,7 @@ class EmpleadoController extends Controller
       }
 
     }else{
-        return redirect()->route('empleaods.index')->withWarning('Contraseña invalida');
+        return redirect()->route('empleaods.index')->withWarning('Datos incoherentes');
     }
     }//aqui cierra el if principal
     else {

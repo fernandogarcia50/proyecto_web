@@ -12,9 +12,13 @@
 */
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('empleados/eliminar/{id}', 'EmpleadoController@eliminar')->name('eliminar');
+Route::post('empleados/eliminarProd', 'ProductoController@eliminar')->name('eliminarproducto');
+Route::post('empleados/actualizarPreProd', 'ProductoController@actualizarPrecios')->name('actualizarproducto');
+Route::post('empleados/actualizarCodProd', 'ProductoController@actualizarCodigo')->name('actualizarproductocod');
 Route::put('empleados/actualizar', 'EmpleadoController@ChangePass')->name('update');
 Route::resource('empleaods', 'EmpleadoController');
 Route::resource('productos', 'ProductoController');
+Route::resource('vacantes', 'VacanteController');
 Route::get('/', function () {
     return view('welcome');
 });
