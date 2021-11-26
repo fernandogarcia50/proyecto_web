@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Vacante;
 
 class VacanteController extends Controller
 {
@@ -13,7 +15,7 @@ class VacanteController extends Controller
      */
     public function index()
     {
-        //
+        return view('vacantes.registrar_vacantes');
     }
 
     /**
@@ -23,7 +25,8 @@ class VacanteController extends Controller
      */
     public function create()
     {
-        //
+        $vacantes=Vacante::paginate(8);
+        return view('vacantes.mostrar_vacantes', compact('vacantes'));
     }
 
     /**
@@ -34,7 +37,26 @@ class VacanteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $contrasena=auth()->user()->password;
+        if (Hash::check($request->pass, $contrasena)){
+           $vacante=new Vacante();
+           $vacante->titulo=$request->titulo;
+           $vacante->puesto=$request->puesto;
+           $vacante->carreras=$request->carreras;
+           $vacante->descripcion=$request->descripcion;
+           if($request->salario != null){
+            $vacante->salario=$request->salario;
+           }else{
+            $vacante->salario=0;
+           }
+           $vacante->status=true;
+           $vacante->save();
+            
+            return redirect()->route('vacantes.create')->withSuccess('Vacante registrada');
+        }else{
+            return redirect()->route('vacantes.create')->withWarning('Contraseña invalida');
+        }
     }
 
     /**
@@ -56,7 +78,7 @@ class VacanteController extends Controller
      */
     public function edit($id)
     {
-        //
+        echo "estoy llegando";
     }
 
     /**
@@ -80,5 +102,16 @@ class VacanteController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function actualizarVacante(Request $request){
+        $contrasena=auth()->user()->password;
+        if (Hash::check($request->pass, $contrasena)){
+            $vacante=Vacante::find($request->id);
+            $vacante->status=false;
+            $vacante->save();
+            return redirect()->route('vacantes.create')->withSuccess('Vacante actualizada');
+        }else{
+            return redirect()->route('vacantes.create')->withWarning('Contraseña invalida');
+        }
     }
 }

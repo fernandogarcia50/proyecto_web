@@ -239,6 +239,12 @@ return [
             'url'  => '/resources/views/empleados/registrar_empleado.blade.php',
             'can'  => 'manage-blog',
         ],
+        [
+            'text'    => 'Cuenta',
+            'route'  => 'configuracion.index',
+            'icon'    => 'fas fa-user-cog',
+            
+        ],
         ['header' => 'Administrador'],
         [
             'text'    => 'Empleados',
@@ -278,24 +284,24 @@ return [
         ['header' => 'Recursos humanos'],
         [
             'text'    => 'Vacantes',
-            'icon'    => 'fas fa-box',
+            'icon'    => 'fas fa-briefcase',
             'submenu' => [
                 [
                     'text' => 'Registrar vacantes',
-                    'route'  => 'productos.index',
+                    'route'  => 'vacantes.index',
                     'icon'    => 'fas fa-plus',
                     
                 ],
                 [
                     'text' => 'Consultar vacantes',
-                    'route'  => 'productos.create',
+                    'route'  => 'vacantes.create',
                     'icon'    => 'fas fa-eye',
                 ],
             ],
         ],
         [
             'text'    => 'Cambiar contraseña',
-            'route'  => 'productos.create',
+            'route'  => 'configuracion.create',
             'icon'    => 'fas fa-unlock-alt',
             
         ],

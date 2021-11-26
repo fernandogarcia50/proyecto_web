@@ -15,6 +15,11 @@ class CreateVacantesTable extends Migration
     {
         Schema::create('vacantes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('titulo');
+            $table->string('descripcion');
+            $table->string('puesto');
+            $table->string('carreras');
+            $table->float('salario',11, 3);
             $table->timestamps();
         });
     }
