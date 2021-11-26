@@ -245,57 +245,72 @@ return [
             'icon'    => 'fas fa-user-cog',
             
         ],
-        ['header' => 'Administrador'],
+        ['header' => 'Administrador',
+        'can'  => 'empleados',
+        ],
         [
             'text'    => 'Empleados',
             'icon'    => 'fas fa-user-tie',
+            'can'  => 'empleados',
             'submenu' => [
                 [
                     'text' => 'Registrar empledo',
                     'route'  => 'registrarempleado',
+                    'can'  => 'empleados',
                     'icon'    => 'fas fa-plus',
                     
                 ],
                 [
                     'text' => 'Mostrar empleados',
                     'route'  => 'empleaods.create',
+                    'can'  => 'empleados',
                     'icon'    => 'fas fa-eye',
                 ],
             ],
         ],
-        ['header' => 'Almacen'],
+        ['header' => 'Almacen',
+        'can'  => 'productos',
+    ],
         [
             'text'    => 'Productos',
             'icon'    => 'fas fa-box',
+            'can'  => 'productos',
             'submenu' => [
                 [
                     'text' => 'Registrar producto',
                     'route'  => 'productos.index',
                     'icon'    => 'fas fa-plus',
+                    'can'  => 'productos',
                     
                 ],
                 [
                     'text' => 'Mostrar producto',
                     'route'  => 'productos.create',
                     'icon'    => 'fas fa-eye',
+                    'can'  => 'productos',
                 ],
             ],
         ],
-        ['header' => 'Recursos humanos'],
+        ['header' => 'Recursos humanos',
+        'can'  => 'vacantes',
+    ],
         [
             'text'    => 'Vacantes',
             'icon'    => 'fas fa-briefcase',
+            'can'  => 'vacantes',
             'submenu' => [
                 [
                     'text' => 'Registrar vacantes',
                     'route'  => 'vacantes.index',
                     'icon'    => 'fas fa-plus',
+                    'can'  => 'vacantes',
                     
                 ],
                 [
                     'text' => 'Consultar vacantes',
                     'route'  => 'vacantes.create',
                     'icon'    => 'fas fa-eye',
+                    'can'  => 'vacantes',
                 ],
             ],
         ],
@@ -303,6 +318,7 @@ return [
             'text'    => 'Cambiar contraseña',
             'route'  => 'configuracion.create',
             'icon'    => 'fas fa-unlock-alt',
+            'can'  => 'vacantes',
             
         ],
         

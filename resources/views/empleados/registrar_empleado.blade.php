@@ -89,7 +89,23 @@
                                   <input type="password" class="form-control rounded-pill" id="password" name="password"  placeholder="Ingresar contraseña">
                                 </div>
                               </div>
-                              <div class="col-sm-12">
+                              <div class="col-sm-6">
+
+                                <div class="form-group">
+                                  <label for="inputState">Tipo de empleado</label>
+                                  <select id="inputState" class="form-control rounded-pill" name="rol">
+                                    <option selected>Roles</option>
+                                    <option>Administrador</option>
+                                    <option>Vendedor</option>
+                                    <option>Almacenista</option>
+                                    <option>Empleado</option>
+                                    <option>Recursos humanos</option>
+                                  </select>
+                                </div>
+
+
+                              </div>
+                              <div class="col-sm-6">
                                 <div class="form-group">
                                   <label for="foto">Fotografia</label>
                                   <div class="input-group">

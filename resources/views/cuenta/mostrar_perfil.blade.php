@@ -17,7 +17,7 @@
             <div class="col-12 col-sm-6">
               <div class="col-12">
                 
-                <img src="{{ asset( 'img/empleado/'.$user)}}" class="product-image" alt="User image">
+                <img src="{{ asset( 'img/empleados/'.$user->empleado->foto)}}" class="product-image my-5" alt="User image">
               </div>
             
             </div>

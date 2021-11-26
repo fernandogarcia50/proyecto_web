@@ -39,6 +39,7 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request);
         $contrasena=auth()->user()->password;
         if (Hash::check($request->pass, $contrasena)) {
                
@@ -78,6 +79,7 @@ class EmpleadoController extends Controller
             $user->password=Hash::make($request->password);
             $user->name=$request->nombre;
             $user->save();
+            $user->assignRole($request->rol);
             $idUsuario= $user->id;
             $empleado= new Empleado();
             $imagen=$request->foto;
