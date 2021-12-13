@@ -11,19 +11,25 @@
 |
 */
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('empleados/constancia', 'EmpleadoController@crear_constancia')->name('crt_cons');
+
 Route::post('empleados/eliminar/{id}', 'EmpleadoController@eliminar')->name('eliminar');
 Route::post('empleados/eliminarProd', 'ProductoController@eliminar')->name('eliminarproducto');
 Route::post('empleados/actualizarPreProd', 'ProductoController@actualizarPrecios')->name('actualizarproducto');
 Route::post('empleados/actualizarCodProd', 'ProductoController@actualizarCodigo')->name('actualizarproductocod');
 Route::put('empleados/actualizar', 'EmpleadoController@ChangePass')->name('update');
 Route::post('vacantes/actualizar', 'VacanteController@actualizarVacante')->name('updatevacante');
+
+Route::get('vacantes/mostrar', 'VacanteController@showVcntProd')->name('mostrarVctProd');
+
 Route::post('configuracion/actualizar/perfil', 'ConfiguracionController@cambiarContra')->name('updatecontra');
 Route::resource('empleaods', 'EmpleadoController');
 Route::resource('productos', 'ProductoController');
 Route::resource('vacantes', 'VacanteController');
 Route::resource('configuracion', 'ConfiguracionController');
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('mostrarVctProd');
 });
 Route::view('/registro', 'empleados/registrar_empleado')->name('registrarempleado');
 

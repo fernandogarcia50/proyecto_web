@@ -67,7 +67,7 @@
                
                 <div class="col-sm-12">
                   <h4 class="mt-3">Constancia</h4>
-                  <a href="" class="btn btn-success rounded-pill">Descargar constancia</a>
+                  <a href="{{route('crt_cons')}}" class="btn btn-success rounded-pill">Descargar constancia</a>
         
                 </div>
                 <div class="col-sm-12">

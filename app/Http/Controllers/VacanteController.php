@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Vacante;
+use App\Producto;
 
 class VacanteController extends Controller
 {
@@ -113,5 +114,13 @@ class VacanteController extends Controller
         }else{
             return redirect()->route('vacantes.create')->withWarning('Contraseña invalida');
         }
+    }
+
+    public function showVcntProd()
+    {
+        $productos=Producto::all();
+        $vacantes=Vacante::all();
+        //return view('vacantes.mostrar_vacantes', compact('vacantes'));
+        return view('welcome', compact('vacantes','productos'));
     }
 }

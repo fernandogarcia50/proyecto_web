@@ -7,6 +7,7 @@ use App\Empleado;
 use Hamcrest\Core\HasToString;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class EmpleadoController extends Controller
 {
@@ -72,8 +73,6 @@ class EmpleadoController extends Controller
       if ($request->salariobruto > $request->salarioneto){
             $hora1 = strtotime( $request->horaEntrada ); 
             $hora2 = strtotime( $request->horaSalida );
-        if($hora1<$hora2)
-        {
             $user=new User();
             $user->email=$request->email;
             $user->password=Hash::make($request->password);
@@ -100,9 +99,6 @@ class EmpleadoController extends Controller
             $empleado->save();
 
             return redirect()->route('empleaods.create')->withSuccess('Empleado agregado');
-        }else{
-            return redirect()->route('empleaods.index')->withWarning('Datos incoherentes');
-        }
           
       }else{
         return redirect()->route('empleaods.index')->withWarning('Datos incoherentes');
@@ -259,5 +255,11 @@ class EmpleadoController extends Controller
             return redirect()->route('empleaods.create')->withWarning('Contraseña invalida');
         }
 
+    }
+
+    public function crear_constancia(){
+        $empleados=Empleado::all();
+        $pdf=PDF::loadView('empleados/constancia_empleado');
+        return $pdf->stream();
     }
 }

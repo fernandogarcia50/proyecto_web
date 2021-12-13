@@ -60,7 +60,7 @@
                               </div>
                               <div class="col-sm-6">
                                 <div class="form-group">
-                                  <label for="fechaEntrada">Fecha de entreda</label>
+                                  <label for="fechaEntrada">Fecha de entrada</label>
                                   <input type="date" class="form-control rounded-pill" id="fechaEntrada" name="fechaEntrada">
                                 </div>
                               </div>
