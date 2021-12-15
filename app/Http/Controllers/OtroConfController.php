@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Empleado;
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\User;
+use App\Empleado;
 use Illuminate\Support\Facades\Hash;
 
 
-
-
-class ConfiguracionController extends Controller
+class OtroConfController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,8 +18,7 @@ class ConfiguracionController extends Controller
      */
     public function index()
     {
-        $user=User::find(Auth::user()->id);
-        return view('cuenta.mostrar_perfil', compact('user'));
+        //
     }
 
     /**
@@ -32,7 +28,8 @@ class ConfiguracionController extends Controller
      */
     public function create()
     {
-        
+        $empleados=Empleado::paginate(8);
+        return view('cuenta.cambiar_pass', compact('empleados'));
     }
 
     /**
@@ -43,8 +40,19 @@ class ConfiguracionController extends Controller
      */
     public function store(Request $request)
     {
-       
-
+        $validation= Validator::make($request->all(), 
+        [
+            'pass' => ['required', 'string', 'min:8'],
+        ]
+        );
+        if ($validation->fails()) {
+           // dd($validation);
+             return redirect()->route('configuracion.create')->withWarning('Contraseña no válida');
+        }
+        $user=User::find($request->id);
+        $user->password=Hash::make($request->pass);
+        $user->save();
+        return redirect()->route('configuracion.create')->withSuccess('Contraseña actualizada');
     }
 
     /**
@@ -90,27 +98,5 @@ class ConfiguracionController extends Controller
     public function destroy($id)
     {
         //
-    }
-    public function cambiarContra(Request $request ){
-        
-        $contrasena=auth()->user()->password;
-        if (Hash::check($request->pass, $contrasena)){
-            $validation= Validator::make($request->all(), 
-        [
-            'pass' => ['required', 'string', 'min:8'],
-        ]
-        );
-        if ($validation->fails()) {
-           // dd($validation);
-             return redirect()->route('configuracion.index')->withWarning('Contraseña no válida');
-        }
-        $user=User::find($request->id);
-        $user->password=Hash::make($request->password);
-        $user->save();
-            
-            return redirect()->route('configuracion.index')->withSuccess('Contraseña actualizada');
-        }else{
-            return redirect()->route('configuracion.index')->withWarning('Contraseña invalida');
-        }
     }
 }

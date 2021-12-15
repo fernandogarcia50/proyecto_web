@@ -24,14 +24,15 @@ Route::post('vacantes/actualizar', 'VacanteController@actualizarVacante')->name(
 Route::get('vacantes/mostrar', 'VacanteController@showVcntProd')->name('mostrarVctProd');
 
 Route::post('configuracion/actualizar/perfil', 'ConfiguracionController@cambiarContra')->name('updatecontra');
-Route::resource('empleaods', 'EmpleadoController');
-Route::resource('productos', 'ProductoController');
-Route::resource('vacantes', 'VacanteController');
+Route::resource('empleaods', 'EmpleadoController')->middleware('can:empleados');
+Route::resource('productos', 'ProductoController')->middleware('can:productos');
+Route::resource('vacantes', 'VacanteController')->middleware('can:vacantes');
+Route::resource('config', 'OtroConfController')->middleware('can:vacantes');
 Route::resource('configuracion', 'ConfiguracionController');
 Route::get('/', function () {
     return redirect()->route('mostrarVctProd');
 });
-Route::view('/registro', 'empleados/registrar_empleado')->name('registrarempleado');
+Route::view('/registro', 'empleados/registrar_empleado')->middleware('can:empleados')->name('registrarempleado');
 
 Auth::routes();
 

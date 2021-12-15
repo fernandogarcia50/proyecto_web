@@ -316,7 +316,7 @@ return [
         ],
         [
             'text'    => 'Cambiar contraseña',
-            'route'  => 'configuracion.create',
+            'route'  => 'config.create',
             'icon'    => 'fas fa-unlock-alt',
             'can'  => 'vacantes',
             
